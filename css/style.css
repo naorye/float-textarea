@@ -1,4 +1,4 @@
-.text-block {
+.float-text {
     border: 3px dashed transparent;
     font-size: 50px;
     font-family: sans-serif;
@@ -12,7 +12,7 @@
     display: inline-block;
 }
 
-.text-block:focus {
+.float-text:focus {
     border-color: #CCCCCC;
     cursor: text !important;
     outline: none;

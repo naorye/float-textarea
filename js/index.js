@@ -1,5 +1,5 @@
 $(function() {
-    $.fn.textBlock = function() {
+    $.fn.floatText = function() {
         this.draggable()
             .click(function() {
                 $(this)
