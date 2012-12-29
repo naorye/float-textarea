@@ -17,3 +17,30 @@
     cursor: text !important;
     outline: none;
 }
+
+/* Version 2*/
+
+.text-block {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    resize: none;
+    font-size:14px;
+    line-height: 1;
+    min-width: 30px;
+    overflow: hidden;
+    white-space: pre;
+    display: block;
+    border: 1px solid #ddd;
+    background-color: #f7f7f7;
+}
+
+.text-block:focus {
+    border-color: #CCCCCC;
+    outline: none;
+}
+
+.text-block-dupe {
+    float: left;
+    display: none;
+    width: auto;
+    height: auto;
+}

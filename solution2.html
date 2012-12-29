@@ -1,0 +1,118 @@
+<!-- Jonathan F solution -->
+<!doctype html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.draggable-resizeable.js"></script>
+		<style>
+
+			.float-text {
+			    resize: none;
+			    font-size: 50px;
+			    border: 3px dashed transparent;
+			    line-height: 1;
+			    overflow: hidden;
+			    min-width: 30px;
+			    overflow: hidden;
+			    white-space: nowrap;
+			    display: inline-block;
+			    cursor: move;
+			    font-family: sans-serif;
+				background: transparent;
+			}
+
+			.float-text:focus {
+			    border-color: #CCCCCC;
+			    cursor: text !important;
+			    outline: none;
+			}
+		</style>
+		<script type="text/javascript">
+			$(function() {
+				function getNewlines(){
+				    // get the value(text) of the textarea
+				    var content = this.value;
+				    
+				    //use regex to find all the newline characters
+				    var newLines = content.match(/\n/g);
+				    
+				    // use the count of newlines(+1 for the first line + 1 for a buffer)
+				    // to set the height of the textarea.
+				    return ((newLines && newLines.length || 0) + 1);
+				};
+
+				function longestLine(){
+				    // get the value(text) of the textarea
+				    var content = this.value;
+				    
+				    // split on newline's. this creates an array, where each item in
+				    // the array is the text of one line
+				    var a = content.split('\n');
+				    
+				    // use a sorting function to order the items in the array:
+				    // longest string to shortest string
+				    a.sort(function(a,b){return b.length - a.length});
+
+				    var emRatio = .6;
+				                         
+				    // use the longest string * the emRatio to set the width
+				    // Due to kerning, the letters aren't ever really 1em x 1em
+				    // So I'm multiplying by an approximate ratio here (guess and check)
+				    this.style.width = (a[0].length * emRatio + 2)+ 'em';
+				};
+
+				function resizeTextarea() {
+				    //set height
+				    this.style.height = getNewlines.call(this) + 'em';
+				    
+				    //set width
+				    longestLine.call(this);        
+				};
+
+			    $.fn.floatText = function() {
+			    	//bind handler
+			    	this.keyup(resizeTextarea)
+			    		.keydown(resizeTextarea);
+
+					// This one is optional, will help when the user holds a key down
+			    	this.each(function() {
+			    		//set initial size
+			    		resizeTextarea.call(this);
+			    	})
+			    		.draggable();/*
+			            .click(function() {
+			                $(this)
+			                    .draggable("option", "disabled", true)
+			                    .focus();
+			            })
+			            .blur(function() {
+			                $(this).draggable("option", "disabled", false);
+			            })
+			            .resizable({
+			                aspectRatio: true,
+			                handles: "nw, ne, sw, se",
+			                resize: function(event, ui) {
+				                var $this = ui.originalElement;
+				                var lines = getNewlines.call($this.get(0));
+				                var height = ui.size.height / lines;
+				                $this.css({
+				                    "font-size": height,
+				                    "width": "",
+				                    "height": height
+				                });
+				                event.stopPropagation();
+			                }
+			            });*/
+			    };
+
+				$(".float-text").floatText();
+			});
+		</script>
+	</head>
+	<body>
+		<textarea id="area" class="float-text">Some Text</textarea>
+	</body>
+</html>

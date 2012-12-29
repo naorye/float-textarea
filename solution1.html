@@ -1,0 +1,67 @@
+<!-- My solution -->
+<!doctype html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.draggable-resizeable.js"></script>
+		<style>
+			.float-text {
+			    border: 3px dashed transparent;
+			    font-size: 50px;
+			    font-family: sans-serif;
+			    cursor: move;
+				background: transparent;
+				resize: none;
+			    line-height: 1;
+			    min-width: 30px;
+			    overflow: visible;
+			    white-space: nowrap;
+			    display: inline-block;
+			}
+
+			.float-text:focus {
+			    border-color: #CCCCCC;
+			    cursor: text !important;
+			    outline: none;
+			}
+		</style>
+		<script type="text/javascript">
+			$(function() {
+			    $.fn.floatText = function() {
+			        this.draggable()
+			            .click(function() {
+			                $(this)
+			                    .draggable("option", "disabled", true)
+			                    .focus();
+			            })
+			            .blur(function() {
+			                $(this).draggable("option", "disabled", false);
+			            })
+			            .resizable({
+			                aspectRatio: true,
+			                handles: "nw, ne, sw, se"
+			            })
+			            .bind("resize", function(event, ui) {
+			                var $this = $(this);
+			                var lines = $this.find("br").length + 1;
+			                var height = ui.size.height / lines;
+			                $this.css({
+			                    "font-size": height,
+			                    "width": "",
+			                    "height": ""
+			                });
+			                event.stopPropagation();
+			            });
+			    };
+
+				$(".float-text").floatText();
+			});
+		</script>
+	</head>
+	<body>
+		<div class="float-text" contenteditable="true">Some Text</div>
+	</body>
+</html>
